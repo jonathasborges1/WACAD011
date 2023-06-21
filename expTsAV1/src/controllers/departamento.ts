@@ -10,7 +10,9 @@ const index = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
    if(req.route.methods.get) {
-      res.render('departamento/create');
+      res.render('departamento/create',{
+         csrf: req.csrfToken()
+       });
    } else {
       const departamento = req.body;
       try {
@@ -19,12 +21,14 @@ const create = async (req: Request, res: Response) => {
       } catch (e: any) {
          console.error(e);
          res.render('departamento/create', { 
+            csrf: req.csrfToken(),
             departamento,  
             errors: e.errors,
          });
       }
    }
 };
+
 const read = async (req: Request, res: Response) => {};
 const update = (req: Request, res: Response) => {};
 const destroy = (req: Request, res: Response) => {};

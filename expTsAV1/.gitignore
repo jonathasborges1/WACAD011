@@ -1,3 +1,5 @@
+dados
 .env
 node_modules
 ./src/db/config.js
+.gitignore

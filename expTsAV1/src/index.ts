@@ -7,7 +7,6 @@ import { Api } from './server';
 dotenv.config();
 validateEnv();
 
-
 const server = new Api();
 
 try {
