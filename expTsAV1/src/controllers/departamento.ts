@@ -29,8 +29,56 @@ const create = async (req: Request, res: Response) => {
    }
 };
 
-const read = async (req: Request, res: Response) => {};
-const update = (req: Request, res: Response) => {};
-const destroy = (req: Request, res: Response) => {};
+const read = async (req: Request, res: Response) => {
+   const departamento = await Departamentos.findByPk(req.params.id);
+   if (departamento) {
+      res.render('departamento/read', {
+         departamento: departamento.toJSON(),
+         csrf: req.csrfToken(),
+      });
+   } else {
+      res.redirect('/departamento');
+   }
+};
+
+const update = async (req: Request, res: Response) => {
+   if (req.route.methods.get) {
+      const departamento = await Departamentos.findByPk(req.params.id);
+      if (departamento) {
+        res.render('departamento/update', {
+          departamento: departamento.toJSON(),
+          csrf: req.csrfToken(),
+        });
+      } else {
+        res.redirect('/departamento');
+      }
+    } else {
+      const departamento = req.body;
+      try {
+        await Departamentos.update(departamento, {
+          where: { id: req.params.id },
+        });
+        res.redirect('/departamento');
+      } catch (err: any) {
+        console.log(err);
+        res.render('departamento/update', {
+          departamento,
+          erros: err.errors,
+          csrf: req.csrfToken(),
+        });
+      }
+    }
+};
+const destroy = async(req: Request, res: Response) => {
+   const departamento = await Departamentos.findByPk(req.params.id);
+   if (departamento) {
+     res.render('departamento/delete', {
+       departamento: departamento.toJSON(),
+       csrf: req.csrfToken(),
+     });
+     await Departamentos.destroy(departamento.toJSON());
+   }
+   res.redirect('/departamento');
+};
 
 export default { index, create, read, update, destroy };

@@ -9,6 +9,15 @@ const router = Router();
 router.get('/', mainController.index);
 router.get('/about', mainController.about);
 router.get('/ui', mainController.ui);
+router.get('/apagarCookie', mainController.clearCookie);
+router.get('/criarCookie', mainController.createCookie);
+
+router.get('/login', mainController.login);
+router.post('/login', mainController.login);
+router.get('/logout', mainController.logout);
+
+router.get('/signup', mainController.signup);
+router.post('/signup', mainController.signup);
 
 // Departamento controller
 router.get('/departamento', checkAuth, departamentoController.index);
@@ -18,12 +27,5 @@ router.get('/departamento/:id', checkAuth ,departamentoController.read);
 router.get('/departamento/update/:id', checkAuth ,departamentoController.update);
 router.post('/departamento/update/:id', checkAuth ,departamentoController.update);
 router.post('/departamento/delete/:id', checkAuth, departamentoController.destroy);
-
-router.get('/apagarCookie', mainController.clearCookie);
-router.get('/criarCookie', mainController.createCookie);
-
-router.get('/login', mainController.login);
-router.post('/login', mainController.login);
-router.get('/logout', mainController.logout);
 
 export default router;
